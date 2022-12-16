@@ -6,12 +6,42 @@ const defaultCartState = {
     totalAmount:0
 };
 
-const CartReducer = (state, action) => {
+// action is the object passed from the dispatch function ( i.e - type: "ADD_ITEM", item: item )
+// state is defaultCartState object!
+const CartReducer = (state, action) => { 
     if (action.type === "ADD_ITEM") {
-        const updatedCart = state.items.concat(action.item);
+
         const updatedTotalAmount = state.totalAmount + action.item.price * action.item.amount;
+
+        // looks through items to see if item already exists - returns index of the first item that satisfies the rule.
+        const existingCartItemIndex = state.items.findIndex(
+            item => item.id === action.item.id
+        );
+        // then we get the existing cart item.
+        const existingCartItem = state.items[existingCartItemIndex];
+
+        let updatedItems;
+
+        // 
+        if (existingCartItem) {
+            const updatedItem = {
+                ...existingCartItem, // existing item is inserted using spread operator.
+                amount: existingCartItem.amount + action.item.amount
+            };
+
+            // all of the current items.
+            updatedItems = [...state.items];
+
+            // we then overwrite the existing item with the new updatedItem array - ( which will contain the new amount ).
+            updatedItems[existingCartItemIndex] = updatedItem;
+
+        } else {
+            // if item doesnt exist, its simply added into the item array.
+            updatedItems = state.items.concat(action.item);
+        }
+
         return {
-            items: updatedCart,
+            items: updatedItems,
             totalAmount: updatedTotalAmount
         };
     }
@@ -29,6 +59,7 @@ const CartProvider = (props) => {
         dispatchCartAction({type: "REMOVE_ITEM", id: id});
     };
 
+    // -- cart context is then updated with the cart state.
     const cartContext = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
