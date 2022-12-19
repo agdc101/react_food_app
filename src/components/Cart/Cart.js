@@ -7,18 +7,33 @@ import CartContext from "../../store/Cart-context";
 const Cart = (props) => {
     const CartCtx = useContext(CartContext);
 
+    // total dollar amount of all the items - this is complied in cart provider whenever cartcontext state changes.
     const totalAmount = `$${CartCtx.totalAmount.toFixed(2)}`;
 
     const hasItems = CartCtx.items.length > 0;
 
-    const removeCartItemHandler = (id) => {};
-    const addCartItemHandler = (item) => {};
+    const removeCartItemHandler = (id) => {
+        console.log("remove")
+    };
+    const addCartItemHandler = (item) => {
+        CartCtx.addItem({
+            ...item,
+            amount: 1
+        });
+    };
 
     const cartItems = 
         <ul className={classes['cart-items']}>
             {CartCtx.items.map((item) => 
             <li>
-                <CartItem key={item.id} name={item.name} amount={item.amount} price={item.price} onRemove={removeCartItemHandler.bind(null, item.id)} onAdd={addCartItemHandler.bind(null, item)}/>
+                <CartItem 
+                    key={item.id} 
+                    name={item.name} 
+                    amount={item.amount} 
+                    price={item.price} 
+                    onRemove={removeCartItemHandler.bind(null, item.id)} 
+                    onAdd={addCartItemHandler.bind(null, item)
+                    }/>
             </li>)}
         </ul>; 
 

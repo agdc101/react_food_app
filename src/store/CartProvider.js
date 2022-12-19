@@ -17,12 +17,11 @@ const CartReducer = (state, action) => {
         const existingCartItemIndex = state.items.findIndex(
             item => item.id === action.item.id
         );
-        // then we get the existing cart item.
+        // then we get the existing cart item using the index number.
         const existingCartItem = state.items[existingCartItemIndex];
-
+        
         let updatedItems;
 
-        // 
         if (existingCartItem) {
             const updatedItem = {
                 ...existingCartItem, // existing item is inserted using spread operator.
@@ -45,6 +44,7 @@ const CartReducer = (state, action) => {
             totalAmount: updatedTotalAmount
         };
     }
+    // the new updated state is now returned.
     return defaultCartState;
 };
 
