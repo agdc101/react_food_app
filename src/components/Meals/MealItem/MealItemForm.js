@@ -10,12 +10,16 @@ const MealItemForm = (props) => {
         event.preventDefault();
         
         const enteredStringAmount = inputRef.current.value;
+
+        //tunrs the input amount into a number.
         const enteredNumAmount = +enteredStringAmount;
 
+        // validates input.
         if (enteredStringAmount.trim().length === 0 || enteredNumAmount < 1 || enteredNumAmount > 5 ) {
             setAmountIsValid(false);
             return;
         }
+        // add item to cart.
         props.onAddToCart(enteredNumAmount);
     };
 
