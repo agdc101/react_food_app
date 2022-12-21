@@ -7,26 +7,26 @@ import classes from '../Meals/AvailableMeals.module.css';
 const DUMMY_MEALS = [
     {
       id: 'm1',
-      name: 'Sushi',
-      description: 'Finest fish and veggies',
+      name: 'Meatfeast Pizza',
+      description: 'Best Pizza in Exeter',
       price: 22.99,
     },
     {
       id: 'm2',
-      name: 'Schnitzel',
-      description: 'A german specialty!',
+      name: 'Big Mac',
+      description: 'Much better than the McDonalds version',
       price: 16.5,
     },
     {
       id: 'm3',
-      name: 'Barbecue Burger',
-      description: 'American, raw, meaty',
+      name: 'Chicken Stirfry',
+      description: 'An all-time classic',
       price: 12.99,
     },
     {
       id: 'm4',
-      name: 'Green Bowl',
-      description: 'Healthy...and green...',
+      name: 'Vegie Green Bowl',
+      description: 'Green and delicious',
       price: 18.99,
     },
   ];
