@@ -34,25 +34,27 @@ const DUMMY_MEALS = [
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getMeals = async () => {
-        const response = await fetch('https://react-http-test-5443a-default-rtdb.firebaseio.com/Meals.json')
-          const responseData = await response.json();
-          const loadedMeals = [];
-          for (const key in responseData) {
-            loadedMeals.push({
-              id: key,
-              name: responseData[key].name,
-              description: responseData[key].description,
-              price: responseData[key].price
-            });
-          }
-          setMeals(loadedMeals);
-    }
-    getMeals();
-  },[]);
-
+      const getMeals = async () => {
+        setIsLoading(true);
+          const response = await fetch('https://react-http-test-5443a-default-rtdb.firebaseio.com/Meals.json')
+            const responseData = await response.json();
+            const loadedMeals = [];
+            for (const key in responseData) {
+              loadedMeals.push({
+                id: key,
+                name: responseData[key].name,
+                description: responseData[key].description,
+                price: responseData[key].price
+              });
+            }
+            setMeals(loadedMeals);
+            setIsLoading(false);
+      }
+      getMeals();
+    },[]);
 
     const mealsList = meals.map(meal => {
        return (
@@ -64,6 +66,7 @@ const AvailableMeals = () => {
 
     return (
       <section className={classes.meals}>
+          {isLoading && <p className={classes.mealsloading}>Loading...</p>}
           <ul>{mealsList}</ul>
       </section>
     );
