@@ -35,11 +35,16 @@ const DUMMY_MEALS = [
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [httpError, setHttpError] = useState();
 
   useEffect(() => {
       const getMeals = async () => {
         setIsLoading(true);
           const response = await fetch('https://react-http-test-5443a-default-rtdb.firebaseio.com/Meals.json')
+            if (!response.ok) {
+              throw new Error('Something went wrong!');
+            }
+
             const responseData = await response.json();
             const loadedMeals = [];
             for (const key in responseData) {
@@ -53,7 +58,11 @@ const AvailableMeals = () => {
             setMeals(loadedMeals);
             setIsLoading(false);
       }
-      getMeals();
+
+        getMeals().catch(error => {
+          setIsLoading(false);
+          setHttpError(error.message);
+        });
     },[]);
 
     const mealsList = meals.map(meal => {
@@ -63,6 +72,14 @@ const AvailableMeals = () => {
         </Card>
        )
     });
+
+    if(httpError) {
+      return (
+        <section className={classes.mealserror}>
+          <p>{httpError}</p>
+        </section>
+      )
+    }
 
     return (
       <section className={classes.meals}>

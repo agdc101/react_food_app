@@ -15,6 +15,12 @@
     color:white;
     font-size: 1.25rem;
   }
+
+  .mealserror {
+    color:red;
+    text-align: center;
+    font-size: 1.25rem;
+  }
   
   @keyframes meals-appear {
     from {
